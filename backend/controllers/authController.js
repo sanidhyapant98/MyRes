@@ -1,4 +1,6 @@
 const { User } = require("../model/userModel")
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 const signupController = async (req, res)=>{
     try{
@@ -12,11 +14,14 @@ const signupController = async (req, res)=>{
         if(existingUser){
 			return res.status(400).send("User already exists")
         }
-        //addidng user
+        //hashing password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPass = await bcrypt.hash(password, salt);
+        //adding user with hashed password
         const user = await User.create({
             userName,
             email,
-            password,
+            password: hashedPass,
             phone,
             address
             })
@@ -30,15 +35,19 @@ const signupController = async (req, res)=>{
 
 const loginController = async (req, res)=>{
     try{
-        const {email, password} = req.body
-        if(!email || !password){
-            res.status(500).send("Provide email and password")
-        }
-        const user = await User.findOne({email})
+        const { email, password } = req.body
+        const user = await User.findOne({ email })
         if(!user){
-            res.status(500).send("User not found")
+            throw new Error("Invalid credentials...")
         }
-        res.status(201).send("Logged in successfully")
+        const checkPassword = await bcrypt.compare(password, user.password)
+        if(checkPassword){
+            const token = await jwt.sign({ _id : user._id}, "dev@Tinder", {expiresIn : "100d"})
+            res.cookie("token", token)
+            res.send(user)
+        }else{
+            throw new Error("Invalid credentials...")
+        }
     }catch(err){
         console.error("Login error:", err.message)
 		return res.status(500).send("Error: " + err.message)
