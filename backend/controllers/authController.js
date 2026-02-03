@@ -42,7 +42,7 @@ const loginController = async (req, res)=>{
         }
         const checkPassword = await bcrypt.compare(password, user.password)
         if(checkPassword){
-            const token = await jwt.sign({ _id : user._id}, "dev@Tinder", {expiresIn : "100d"})
+            const token = await jwt.sign({ _id : user._id}, process.env.JWT_SECRET, {expiresIn : "100d"})
             res.cookie("token", token)
             res.send(user)
         }else{
