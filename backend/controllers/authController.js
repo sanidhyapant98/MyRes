@@ -43,11 +43,7 @@ const loginController = async (req, res)=>{
         const checkPassword = await bcrypt.compare(password, user.password)
         if(checkPassword){
             const token = await jwt.sign({ _id : user._id}, process.env.JWT_SECRET, {expiresIn : "100d"})
-            res.cookie("token", token, {
-                httpOnly: true,
-                secure: true,
-                sameSite: "strict"
-            })
+            res.cookie("token", token)
             res.send(user)
         }else{
             throw new Error("Invalid credentials...")

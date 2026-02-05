@@ -60,8 +60,21 @@ const updatePassword = async (req, res)=>{
     }
 }
 
+const deleteUser = async (req, res) => {
+    try {
+        const user = await User.findByIdAndDelete(req.user._id)
+        if(!user){
+            return res.status(404).send("User not found")
+        }
+        res.status(200).send("User deleted successfully")
+    } catch(err) {
+        return res.status(500).send("Error: " + err.message)
+    }
+}
+
 module.exports = {
     userController,
     updateController,
-    updatePassword
+    updatePassword,
+    deleteUser
 }
