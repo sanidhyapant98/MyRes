@@ -4,9 +4,9 @@ const jwt = require('jsonwebtoken')
 
 const signupController = async (req, res)=>{
     try{
-        const {userName, email, password, phone, address} = req.body
+        const {userName, email, password, phone, address, userType} = req.body
         //validation
-        if(!userName || !email || !password || !phone || !address){
+        if(!userName || !email || !password || !phone || !address || !userType){
 			return res.status(400).send("Provide all fields")
 		}
         //check existing user
@@ -23,7 +23,8 @@ const signupController = async (req, res)=>{
             email,
             password: hashedPass,
             phone,
-            address
+            address, 
+            userType
             })
             await user.save()
             return res.status(201).send("User registered successfully")
