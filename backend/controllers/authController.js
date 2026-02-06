@@ -44,7 +44,7 @@ const loginController = async (req, res)=>{
         if(checkPassword){
             const token = await jwt.sign({ _id : user._id}, process.env.JWT_SECRET, {expiresIn : "100d"})
             res.cookie("token", token)
-            res.send(user)
+            return res.status(200).send({success: true, user})
         }else{
             throw new Error("Invalid credentials...")
         }

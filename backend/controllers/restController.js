@@ -18,9 +18,17 @@ const createRestController = async (req, res)=>{
 
 const getRestController = async (req, res)=>{
     try{
-        
+        const restaurants = await Restaurant.find({})
+        if(!restaurants){
+            return res.status(404).send("No restaurants found")
+        }
+        return res.status(200).send({
+            success : true,
+            totalCount : restaurants.length,
+            restaurants
+        })
     }catch(err){
-        return res.status(500).send("Error : " + err.messgae)
+        return res.status(500).send("Error : " + err.message)
     }
 }
 
