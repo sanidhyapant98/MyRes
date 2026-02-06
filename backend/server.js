@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser')
 const {connectDB} = require('./config/db')
 const { authRouter } = require('./routes/authRouter')
 const { userRouter } = require('./routes/userRouter')
+const { restRouter } = require('./routes/restRoute')
 
 dotenv.config()
 
@@ -16,8 +17,9 @@ app.use(express.json())
 // Parse cookies for auth middleware
 app.use(cookieParser())
 
-app.use('/', authRouter)
-app.use('/', userRouter)
+app.use('/api/v1/auth', authRouter)
+app.use('/api/v1/user', userRouter)
+app.use('/api/v1/restaurant', restRouter)
 
 const PORT = process.env.PORT || 5000
 
