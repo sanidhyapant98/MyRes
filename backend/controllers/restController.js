@@ -32,7 +32,38 @@ const getRestController = async (req, res)=>{
     }
 }
 
+const getRestByIdController = async (req, res)=>{
+    try{
+        const restaurantId = req.params.id
+        const restaurant = await Restaurant.findById(restaurantId)
+        if(!restaurant){
+            return res.status(404).send("Restaurant not found")
+        }
+        return res.status(200).send({
+            message : "Restaurant found successfully",
+            restaurant
+        })
+    }catch(err){
+        return res.status(500).send("Error : " + err.message)
+    }
+}
+
+const deleteResByIdController = async (req, res)=>{
+    try{
+        const {id} = req.params
+        const restaurant = await Restaurant.findByIdAndDelete(id)
+        if(!restaurant){
+            return res.status(404).send("Couldn't delete, Restaurant not found")
+        }
+        return res.status(200).send("Restaurant deleted successfully")
+    }catch(err){
+        return res.status(500).send("Error : " + err.message)        
+    }
+}
+
 module.exports = {
     createRestController,
-    getRestController
+    getRestController,
+    getRestByIdController,
+    deleteResByIdController
 }
