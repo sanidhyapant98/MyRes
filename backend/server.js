@@ -5,7 +5,8 @@ const cookieParser = require('cookie-parser')
 const {connectDB} = require('./config/db')
 const { authRouter } = require('./routes/authRouter')
 const { userRouter } = require('./routes/userRouter')
-const { restRouter } = require('./routes/restRoute')
+const { restRouter } = require('./routes/restRouter')
+const { catRouter } = require('./routes/catagoryRouter')
 
 dotenv.config()
 
@@ -20,6 +21,7 @@ app.use(cookieParser())
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/user', userRouter)
 app.use('/api/v1/restaurant', restRouter)
+app.use('/api/v1/catagory', catRouter)
 
 const PORT = process.env.PORT || 5000
 
