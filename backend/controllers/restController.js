@@ -2,12 +2,12 @@ const { Restaurant } = require("../model/restaurantModel")
 
 const createRestController = async (req, res)=>{
     try{
-        const {title, imageUrl, foods, time, pickup, delivery, isOpen, rating, ratingCount, code } = req.body
+        const {title, imageUrl, time, pickup, delivery, isOpen, rating, ratingCount, code } = req.body
         if(!title){
             return res.status(400).send("Please provide title")
         }
         const newRestaurant = await Restaurant.create({
-            title, imageUrl, foods, time, pickup, delivery, isOpen, rating, ratingCount, code 
+            title, imageUrl, time, pickup, delivery, isOpen, rating, ratingCount, code 
         })
         await newRestaurant.save()
         res.status(200).send("New Restaurant created successfully")
