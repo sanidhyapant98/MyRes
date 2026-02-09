@@ -1,4 +1,4 @@
-const validator = require('validator')
+import validator from 'validator';
 
 function profileValidation(data = {}){
     const errors = []
@@ -19,6 +19,4 @@ function profileValidation(data = {}){
     }
 }
 
-module.exports = {
-    profileValidation
-}
+export { profileValidation };

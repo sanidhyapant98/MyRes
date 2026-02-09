@@ -1,4 +1,4 @@
-const {Order} = require('../model/orderModel')
+import { Order } from '../model/orderModel.js'
 
 const placeOrderController = async (req, res) => {
     try {
@@ -61,7 +61,4 @@ const updateOrderStatusController = async (req, res)=>{
     }
 }
 
-module.exports = {
-    placeOrderController,
-    updateOrderStatusController
-}
+export { placeOrderController, updateOrderStatusController }

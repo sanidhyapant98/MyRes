@@ -1,4 +1,4 @@
-const { Restaurant } = require("../model/restaurantModel")
+import { Restaurant } from "../model/restaurantModel.js"
 
 const createRestController = async (req, res)=>{
     try{
@@ -61,9 +61,4 @@ const deleteResByIdController = async (req, res)=>{
     }
 }
 
-module.exports = {
-    createRestController,
-    getRestController,
-    getRestByIdController,
-    deleteResByIdController
-}
+export { createRestController, getRestController, getRestByIdController, deleteResByIdController }

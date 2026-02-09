@@ -1,5 +1,5 @@
-const { Catagory } = require('../model/catagoryModel')
-const { updateController } = require('./userController')
+import { Catagory } from '../model/catagoryModel.js'
+import { updateController } from './userController.js'
 
 const catController = async (req, res) => {
     try {
@@ -64,9 +64,4 @@ const catDeleteByIdController = async (req, res)=>{
     }
 }
 
-module.exports = {
-    catController,
-    catGetAllController,
-    catUpdateByIdController,
-    catDeleteByIdController
-}
+export { catController, catGetAllController, catUpdateByIdController, catDeleteByIdController }

@@ -1,7 +1,8 @@
-const express = require ('express')
-const { authMiddleware } = require('../middlewares/authMiddleware')
-const { roleMiddleware } = require('../middlewares/roleMiddleware')
-const { createFoodController, getAllFoodsController, getFoodByIdController, getFoodByRestaurantController, updateFoodController } = require('../controllers/foodController')
+import express from 'express'
+import { authMiddleware } from '../middlewares/authMiddleware.js'
+import { roleMiddleware } from '../middlewares/roleMiddleware.js'
+import { createFoodController, getAllFoodsController, getFoodByIdController, getFoodByRestaurantController, updateFoodController } from '../controllers/foodController.js'
+
 const foodRouter = express.Router()
 
 foodRouter.post('/create', authMiddleware, roleMiddleware("admin", "vendor"), createFoodController)
@@ -10,6 +11,4 @@ foodRouter.get('/get/:id', getFoodByIdController)
 foodRouter.get('/restaurant/:restId/foodItem/:foodId', getFoodByRestaurantController)
 foodRouter.patch('/updateFood/:id', authMiddleware, roleMiddleware("admin", "vendor"), updateFoodController)
 
-module.exports = {
-    foodRouter
-}
+export { foodRouter }

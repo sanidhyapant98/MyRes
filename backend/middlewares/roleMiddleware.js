@@ -1,4 +1,4 @@
-const roleMiddleware = (...allowedRoles) =>{
+export const roleMiddleware = (...allowedRoles) =>{
     return (req, res, next)=>{
         try{
             const user = req.user
@@ -13,8 +13,4 @@ const roleMiddleware = (...allowedRoles) =>{
             return res.status(500).send("Error : " + err.message)
         }
     }
-}
-
-module.exports = {
-    roleMiddleware
 }

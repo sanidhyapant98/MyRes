@@ -1,14 +1,15 @@
-const express = require('express')
-const dotenv = require('dotenv')
-const colors = require('colors')
-const cookieParser = require('cookie-parser')
-const {connectDB} = require('./config/db')
-const { authRouter } = require('./routes/authRouter')
-const { userRouter } = require('./routes/userRouter')
-const { restRouter } = require('./routes/restRouter')
-const { catRouter } = require('./routes/catagoryRouter')
-const { foodRouter } = require('./routes/foodRouter')
-const { orderRouter } = require('./routes/orderRouter')
+import express from 'express'
+import dotenv from 'dotenv'
+import 'colors'
+import cookieParser from 'cookie-parser'
+import { connectDB } from './config/db.js'
+import { authRouter } from './routes/authRouter.js'
+import { userRouter } from './routes/userRouter.js'
+import { restRouter } from './routes/restRouter.js'
+import { catRouter } from './routes/catagoryRouter.js'
+import { foodRouter } from './routes/foodRouter.js'
+import { orderRouter } from './routes/orderRouter.js'
+import { apiLimiter } from './middlewares/rateLimiterMiddleware.js'
 
 dotenv.config()
 
@@ -20,6 +21,7 @@ app.use(express.json())
 // Parse cookies for auth middleware
 app.use(cookieParser())
 
+app.use('/api', apiLimiter)
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/user', userRouter)
 app.use('/api/v1/restaurant', restRouter)

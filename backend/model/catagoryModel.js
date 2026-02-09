@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const catagoryModel = new mongoose.Schema({
     title : {
@@ -13,6 +13,4 @@ const catagoryModel = new mongoose.Schema({
 
 const Catagory = mongoose.model("Catagory", catagoryModel)
 
-module.exports = {
-    Catagory
-}
+export { Catagory }

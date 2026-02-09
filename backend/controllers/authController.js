@@ -1,7 +1,7 @@
-const { User } = require("../model/userModel")
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
-const { profileValidation } = require("../utils/validation")
+import { User } from "../model/userModel.js";
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { profileValidation } from "../utils/validation.js";
 
 const signupController = async (req, res)=>{
     try{
@@ -60,4 +60,4 @@ const loginController = async (req, res)=>{
     }
 }
 
-module.exports = {signupController, loginController}
+export { signupController, loginController };
