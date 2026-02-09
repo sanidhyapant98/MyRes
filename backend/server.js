@@ -8,6 +8,7 @@ const { userRouter } = require('./routes/userRouter')
 const { restRouter } = require('./routes/restRouter')
 const { catRouter } = require('./routes/catagoryRouter')
 const { foodRouter } = require('./routes/foodRouter')
+const { orderRouter } = require('./routes/orderRouter')
 
 dotenv.config()
 
@@ -24,6 +25,7 @@ app.use('/api/v1/user', userRouter)
 app.use('/api/v1/restaurant', restRouter)
 app.use('/api/v1/catagory', catRouter)
 app.use('/api/v1/food', foodRouter)
+app.use('/api/v1/order', orderRouter)
 
 const PORT = process.env.PORT || 5000
 
