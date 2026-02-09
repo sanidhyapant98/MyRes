@@ -1,18 +1,23 @@
 const { User } = require("../model/userModel")
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const { profileValidation } = require("../utils/validation")
 
 const signupController = async (req, res)=>{
     try{
+        const validation = profileValidation(req.body)
+        if(!validation.valid){
+            return res.status(400).json(
+                { success: false,
+                  errors: validation.errors 
+                }
+            )
+        }
         const {userName, email, password, phone, address, userType} = req.body
-        //validation
-        if(!userName || !email || !password || !phone || !address || !userType){
-			return res.status(400).send("Provide all fields")
-		}
         //check existing user
         const existingUser = await User.findOne({email})
         if(existingUser){
-			return res.status(400).send("User already exists")
+            return res.status(400).send("User already exists")
         }
         //hashing password
         const salt = await bcrypt.genSalt(10);
@@ -29,8 +34,8 @@ const signupController = async (req, res)=>{
             await user.save()
             return res.status(201).send("User registered successfully")
     }catch(err){
-		console.error("Signup error:", err.message)
-		return res.status(500).send("Error: " + err.message)
+        console.error("Signup error:", err.message)
+        return res.status(500).send("Error: " + err.message)
     }
 }
 
@@ -39,7 +44,7 @@ const loginController = async (req, res)=>{
         const { email, password } = req.body
         const user = await User.findOne({ email })
         if(!user){
-            throw new Error("Invalid credentials...")
+            return res.status(401).send('Invalid credentials')
         }
         const checkPassword = await bcrypt.compare(password, user.password)
         if(checkPassword){
@@ -47,11 +52,11 @@ const loginController = async (req, res)=>{
             res.cookie("token", token)
             return res.status(200).send({success: true, user})
         }else{
-            throw new Error("Invalid credentials...")
+            return res.status(401).send('Invalid credentials')
         }
     }catch(err){
         console.error("Login error:", err.message)
-		return res.status(500).send("Error: " + err.message)
+        return res.status(500).send("Error: " + err.message)
     }
 }
 
