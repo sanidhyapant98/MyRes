@@ -17,7 +17,14 @@ export const loginLimiter = rateLimit({
     message : "Too many requests. Please try again later."
 })
 
+export const signupLimiter = rateLimit({
+    windowMs : 15 * 60 * 1000,
+    max : 10,
+    message : "Too many requests. Please try again later."
+})
+
 export const readLimiter = rateLimit({
     windowMs : 1 * 60 * 1000,
-    max : 60
+    max : 60,
+    message : "Too many requests. Please try again later."
 })

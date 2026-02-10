@@ -9,7 +9,6 @@ import { restRouter } from './routes/restRouter.js'
 import { catRouter } from './routes/catagoryRouter.js'
 import { foodRouter } from './routes/foodRouter.js'
 import { orderRouter } from './routes/orderRouter.js'
-import { apiLimiter } from './middlewares/rateLimiterMiddleware.js'
 
 dotenv.config()
 
@@ -21,7 +20,6 @@ app.use(express.json())
 // Parse cookies for auth middleware
 app.use(cookieParser())
 
-app.use('/api', apiLimiter)
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/user', userRouter)
 app.use('/api/v1/restaurant', restRouter)
